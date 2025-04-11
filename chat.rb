@@ -6,17 +6,17 @@ client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_API_KEY"))
 
 pp "Hello! How can I help you today?"
 pp "-" * 50
-##response = gets.chomp
-response = "You're a helpful assistant who talks like Dora"
+response = gets.chomp
+while response != "bye"
+
+##response = "You're a helpful assistant who talks like Dora"
+
 message_list = [
   {
     "role" => "system",
     "content" => "#{response}"
   },
-  {
-    "role" => "user",
-    "content" => "Hello! What are teh best spots for pizza in chicago?"
-  }
+  #{ "role" => "user", "content" => "Hello! What are teh best spots for pizza in chicago?"}
 ]
 
 api_response = client.chat(
@@ -28,3 +28,6 @@ api_response = client.chat(
 message_hash = api_response.fetch("choices").at(0)
 pp content = message_hash.fetch("message").fetch("content")
 pp "-" * 50
+
+response = gets.chomp
+end
